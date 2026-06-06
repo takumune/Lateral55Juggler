@@ -63,7 +63,7 @@ export const REEL_CONFIG: Record<'left' | 'center' | 'right', SymbolType[]> = {
  * 【リールの縦幅（高さ）を変えたい場合は SYMBOL_HEIGHT を変更してください】
  */
 export const SYMBOL_WIDTH = 140;
-export const SYMBOL_HEIGHT = 65;
+export const SYMBOL_HEIGHT = 75;
 
 /** 1リールに完全に表示するコマ数（上・中・下） */
 export const VISIBLE_ROWS = 3;

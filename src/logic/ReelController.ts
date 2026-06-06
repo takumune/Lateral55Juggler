@@ -1,3 +1,4 @@
+import { SoundManager } from '../audio/SoundManager';
 import type { ReelId, ReelState, SymbolType } from '../types';
 import { REEL_LENGTH, SYMBOL_HEIGHT, REEL_CONFIG } from '../constants/config';
 import { gameState } from '../state/GameState';
@@ -97,6 +98,7 @@ export class ReelController {
 
   /** 全リールを SPINNING 状態にして回転開始する */
   startAll(): void {
+    SoundManager.playStart();
     for (const id of this.ids) {
       const s = this.states[id];
       s.status = 'SPINNING';
@@ -169,6 +171,8 @@ export class ReelController {
 
     const s = this.states[id];
     if (s.status !== 'SPINNING') return; // SLIDING・STOPPED はガード
+
+    SoundManager.playStop();
 
     // ── targetY 計算 ──
     // 停止ボタンが押された瞬間の位置から「次のコマ境界」を求める
@@ -534,6 +538,7 @@ export class ReelController {
       // 内部当落はあるが、まだ揃っていない場合は後告知（STANDBYへ）
       gameState.isGogoLampOn = true;
       gameState.playState = 'BONUS_STANDBY';
+      SoundManager.playGako(); // ここでガコッ！
       console.log('[DEBUG] GOGO!ランプ点灯 ✨');
     }
   }

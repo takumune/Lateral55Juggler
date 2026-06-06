@@ -2,6 +2,7 @@ import './style.css';
 import { CanvasRenderer } from './views/CanvasRenderer';
 import { ReelController } from './logic/ReelController';
 import { FRAME_DURATION_MS } from './constants/config';
+import { SoundManager } from './audio/SoundManager';
 import { gameState } from './state/GameState';
 import { Lottery } from './logic/Lottery';
 
@@ -52,6 +53,9 @@ if (assistToggleEl) {
  *   Space → 全リールが停止済みのときに再回転
  */
 window.addEventListener('keydown', (e: KeyboardEvent) => {
+  // ブラウザの音再生制限を解除するため、ユーザー操作の瞬間に初期化
+  SoundManager.init();
+  
   switch (e.key) {
     case '1':
       reelController.stopReel(0); // 左
@@ -81,6 +85,7 @@ window.addEventListener('keydown', (e: KeyboardEvent) => {
         if (required > 0 && gameState.credits >= required) {
           gameState.credits -= required;
           gameState.bet = 3;
+          SoundManager.playBet();
           console.log('[SYSTEM] 3枚BET完了');
         } else if (required > 0) {
           console.log('[SYSTEM] クレジットが足りません');
@@ -108,6 +113,7 @@ window.addEventListener('keydown', (e: KeyboardEvent) => {
           if (gameState.credits >= required) {
             gameState.credits -= required;
             gameState.bet = requiredBet;
+            SoundManager.playBet();
             console.log(`[SYSTEM] ${requiredBet}枚BET完了（Spaceキー自動処理）`);
           } else {
             console.log('[SYSTEM] クレジットが足りません。↑キー等でメダルを追加してください。');
@@ -392,6 +398,7 @@ if (assistToggle) {
 const settingSelect = document.getElementById('setting-select') as HTMLSelectElement;
 if (settingSelect) {
   settingSelect.addEventListener('change', () => {
+    SoundManager.init();
     const val = settingSelect.value;
     gameState.setting = (val === 'X' ? 'X' : Number(val)) as any;
     console.log(`[SYSTEM] 設定を ${gameState.setting} に変更しました`);
