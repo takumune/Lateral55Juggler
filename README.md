@@ -2,6 +2,9 @@
 
 ブラウザ上で動作する高精度なパチスロシミュレーションエンジン。実機の挙動を数学的・視覚的に忠実に再現。
 
+## 関連リンク
+- **GitHub リポジトリ**: [takumune/55juggler](https://github.com/takumune/55juggler)
+
 ## 1. プロジェクト概要
 - **技術スタック**: HTML5 / TypeScript / CSS3 / Canvas API
 - **目的**: パチスロ特有の「物理的なリール挙動」と「内部抽選」をWeb標準技術のみで完全再現。
